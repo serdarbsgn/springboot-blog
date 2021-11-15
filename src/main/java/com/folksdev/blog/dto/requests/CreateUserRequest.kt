@@ -1,6 +1,5 @@
 package com.folksdev.blog.dto.requests
 import com.folksdev.blog.model.Gender
-import java.util.*
 import javax.validation.constraints.NotBlank
 import javax.validation.constraints.NotNull
 
@@ -17,7 +16,5 @@ data class CreateUserRequest(
     @field:NotBlank
     val dateOfBirth: String,
     @field:NotNull
-    val gender: Gender,
-    val groupsIds: List<String>? = ArrayList(),
-    val commentsIds: List<String>? =ArrayList()
+    val gender: Gender
 )

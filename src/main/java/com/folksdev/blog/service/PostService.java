@@ -45,6 +45,7 @@ public class PostService {
     public PostDto updatePostById(String postId, CreatePostRequest createPostRequest) {
         Post post = findPostById(postId);
         post = new Post(
+                post.getId(),
                 createPostRequest.getTitle(),
                 createPostRequest.getContent(),
                 createPostRequest.getTopicsTypes(),
@@ -73,11 +74,5 @@ public class PostService {
             postRepository.deleteById(postId);
             return "Post successfully deleted from database";
         } else throw new PostNotFoundException("Couldn't find post by id: " + postId);
-    }
-    public String deletePostsByBlog(String blogId) {
-        if (postRepository.existsByBlogId(blogId)) {
-            postRepository.deleteByBlogId(blogId);
-            return "Posts successfully deleted from database of the blog";
-        } else throw new PostNotFoundException("Couldn't find posts of blogid: " + blogId);
     }
 }

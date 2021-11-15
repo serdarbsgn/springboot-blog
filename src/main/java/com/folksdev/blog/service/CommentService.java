@@ -10,6 +10,7 @@ import com.folksdev.blog.model.User;
 import com.folksdev.blog.repository.CommentRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -55,13 +56,13 @@ public class CommentService {
         return commentDtoConverter.convert(commentRepository.save(comment));
     }
 
-    public CommentDto updateComment(String postId, String userId, CreateCommentRequest createCommentRequest) {
-        Post post = postService.findPostById(postId);
-        User user = userService.findUserById(userId);
-        Comment comment = new Comment(
+    public CommentDto updateComment(String id, CreateCommentRequest createCommentRequest) {
+        Comment comment = findCommentById(id);
+        comment = new Comment(comment.getId(),
                 createCommentRequest.getBody(),
-                post,
-                user
+                LocalDateTime.now(),
+                comment.getPost(),
+                comment.getUser()
         );
         return commentDtoConverter.convert(commentRepository.save(comment));
     }

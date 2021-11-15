@@ -47,6 +47,7 @@ public class BlogService {
     public BlogDto updateBlog(CreateBlogRequest updateBlogRequest, String blogId) {
         Blog blog = findBlogById(blogId);
         blog = new Blog(
+                blog.getId(),
                 updateBlogRequest.getTitle(),
                 updateBlogRequest.getDescription(),
                 updateBlogRequest.getContent(),

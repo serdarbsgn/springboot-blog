@@ -26,6 +26,7 @@ public class PostService {
     }
 
     public List<PostDto> getPostsByBlogId(String blogId) {
+         blogService.findBlogById(blogId);
          return postRepository.findAllByBlogId(blogId).stream()
                 .map(postDtoConverter::convert).collect(Collectors.toList());
     }
@@ -70,9 +71,8 @@ public class PostService {
     }
 
     public String deletePost(String postId) {
-        if (postRepository.existsById(postId)) {
+            findPostById(postId);
             postRepository.deleteById(postId);
-            return "Post successfully deleted from database";
-        } else throw new PostNotFoundException("Couldn't find post by id: " + postId);
+            return "Post successfully deleted from database :" + postId;
     }
 }

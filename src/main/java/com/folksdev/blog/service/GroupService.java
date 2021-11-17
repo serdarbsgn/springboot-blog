@@ -69,9 +69,8 @@ public class GroupService {
     }
 
     public String deleteGroup(String id) {
-        if (groupRepository.existsById(id)) {
+            findGroupById(id);
             groupRepository.deleteById(id);
-            return "Group successfully deleted from database";
-        } else throw new GroupNotFoundException("Couldn't find group by id: " + id);
+            return "Group successfully deleted from database with id:" + id;
     }
 }

@@ -1,5 +1,6 @@
 package com.folksdev.blog.dto.requests
 import com.folksdev.blog.model.Gender
+import javax.validation.constraints.Email
 import javax.validation.constraints.NotBlank
 import javax.validation.constraints.NotNull
 
@@ -11,7 +12,7 @@ data class CreateUserRequest(
     val surname: String,
     @field:NotBlank
     val username: String,
-    @field:NotBlank
+    @field:Email
     val email: String,
     @field:NotBlank
     val dateOfBirth: String,

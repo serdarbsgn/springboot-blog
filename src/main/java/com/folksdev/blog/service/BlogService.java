@@ -72,10 +72,10 @@ public class BlogService {
     }
 
     public String deleteBlog(String blogId) {
-        if (blogRepository.existsById(blogId)) {
+            findBlogById(blogId);
             blogRepository.deleteById(blogId);
-            return "deleted blog by id :" + blogId;
-        } else throw new BlogNotFoundException("Couldn't find blog by id: " + blogId);
+            return "Blog successfully deleted from database with id:" + blogId;
+
     }
 
     public void checkUniqueConstraints(String userId)

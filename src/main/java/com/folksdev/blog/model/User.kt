@@ -47,6 +47,8 @@ data class User @JvmOverloads constructor(
     constructor(name: String, surname: String, username: String, email: String, dateOfBirth: LocalDate, gender: Gender) :
             this("", name, surname, username, email, dateOfBirth, gender, HashSet(),null,HashSet())
 
+
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false

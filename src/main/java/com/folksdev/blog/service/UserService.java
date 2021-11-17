@@ -4,8 +4,10 @@ import com.folksdev.blog.dto.UserDto;
 import com.folksdev.blog.dto.requests.CreateUserRequest;
 import com.folksdev.blog.dto.converter.UserDtoConverter;
 import com.folksdev.blog.dto.requests.UpdateUserRequest;
+import com.folksdev.blog.exception.CommentNotFoundException;
 import com.folksdev.blog.exception.UserNotFoundException;
 import com.folksdev.blog.exception.UserUniqueConstraintsViolatedException;
+import com.folksdev.blog.model.Comment;
 import com.folksdev.blog.model.Group;
 import com.folksdev.blog.model.User;
 import com.folksdev.blog.repository.UserRepository;
@@ -61,10 +63,9 @@ public class UserService {
     }
 
     public String deleteUser(String id) {
-        if (userRepository.existsById(id)) {
-            userRepository.deleteById(id);
-            return "User successfully deleted from database with id: "+ id ;
-        } else throw new UserNotFoundException("Couldn't find user with id: " + id);
+        findUserById(id);
+        userRepository.deleteById(id);
+        return "User successfully deleted from database with id: "+ id ;
     }
 
     public UserDto updateUserAddGroup(String userId, String groupId) {

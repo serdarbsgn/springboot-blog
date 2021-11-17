@@ -45,9 +45,4 @@ public class BlogController {
     public ResponseEntity<String> deleteBlog(@PathVariable String blogId){
         return ResponseEntity.ok(blogService.deleteBlog(blogId));
     }
-
-
-
-
-
 }

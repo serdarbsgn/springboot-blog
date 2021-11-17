@@ -41,6 +41,7 @@ public class CommentService {
     }
 
     public List<CommentDto> getCommentsByPostId(String postId) {
+        postService.findPostById(postId);
         return commentRepository.findAllByPostId(postId).stream()
                 .map(commentDtoConverter::convert).collect(Collectors.toList());
     }
@@ -68,10 +69,9 @@ public class CommentService {
     }
 
     public String deleteComment(String commentId) {
-        if (commentRepository.existsById(commentId)) {
+            findCommentById(commentId);
             commentRepository.deleteById(commentId);
             return "Comment successfully deleted from database :" + commentId;
-        } else throw new CommentNotFoundException("Couldn't find comment of userid: " + commentId);
     }
 
 

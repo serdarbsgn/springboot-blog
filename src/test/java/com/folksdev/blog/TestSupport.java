@@ -1,9 +1,7 @@
 package com.folksdev.blog;
 
 import com.folksdev.blog.dto.*;
-import com.folksdev.blog.dto.requests.CreateBlogRequest;
-import com.folksdev.blog.dto.requests.CreateCommentRequest;
-import com.folksdev.blog.dto.requests.CreatePostRequest;
+import com.folksdev.blog.dto.requests.*;
 import com.folksdev.blog.model.*;
 import com.sun.istack.Nullable;
 
@@ -12,6 +10,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 
 public class TestSupport {
 
@@ -36,10 +36,10 @@ public class TestSupport {
                 "name",
                 "surname",
                 "username",
-                "email",
+                "email@email.com",
                 generateLocalDate(),
                 Gender.UNKNOWN,
-                Collections.emptySet(),
+                Set.of(generateGroup("id4")),
                 null,
                 Collections.emptySet());
 
@@ -120,7 +120,7 @@ public class TestSupport {
                 blog.getDescription(),
                 blog.getContent(),
                 blog.getDate(),
-                generateUserDto(),
+                generateUserDto("userId"),
                 Collections.emptyList()
                 );
     }
@@ -130,8 +130,8 @@ public class TestSupport {
 
     }
 
-    public UserDto generateUserDto(){
-        User user = generateUser("userId");
+    public UserDto generateUserDto(String id){
+        User user = generateUser(id);
         return new UserDto(
                 user.getUsername(),
                 user.getDateOfBirth(),
@@ -152,7 +152,7 @@ public class TestSupport {
     }
     public GroupDto generateGroupDto(String id){
         Group group = generateGroup(id);
-        return new GroupDto(group.getId(),
+        return new GroupDto(Objects.requireNonNull(group.getId()),
                 group.getName(),
                 group.getDescription(),
                 group.getDate(),
@@ -163,6 +163,27 @@ public class TestSupport {
         return new CreateBlogRequest("title",
                 "description",
                 "content");
+    }
+
+    public CreateGroupRequest generateGroupRequest(){
+        return new CreateGroupRequest("name",
+                "description",
+                List.of(GroupsType.DEFAULT));
+    }
+    public CreateUserRequest generateCreateUserRequest(){
+        return new CreateUserRequest("name",
+                "surname",
+                "username",
+                "email@email.com",
+                generateLocalDate().toString(),
+                Gender.UNKNOWN);
+    }
+
+    public UpdateUserRequest generateUpdateUserRequest(){
+        return new UpdateUserRequest("username"
+                ,"email@email.com"
+                ,generateLocalDate().toString()
+                ,Gender.UNKNOWN);
     }
 }
 

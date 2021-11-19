@@ -37,8 +37,7 @@ public class BlogService {
                 createBlogRequest.getTitle(),
                 createBlogRequest.getDescription(),
                 createBlogRequest.getContent(),
-                user,
-                Collections.emptySet()
+                user
         );
         return blogDtoConverter.convert(blogRepository.save(blog));
 
@@ -51,6 +50,7 @@ public class BlogService {
                 updateBlogRequest.getTitle(),
                 updateBlogRequest.getDescription(),
                 updateBlogRequest.getContent(),
+                blog.getDate(),
                 blog.getUser(),
                 blog.getPosts()
         );

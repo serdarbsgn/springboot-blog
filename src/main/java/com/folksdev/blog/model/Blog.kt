@@ -21,7 +21,7 @@ data class Blog @JvmOverloads constructor(
     val user: User,
 
     @OneToMany(mappedBy = "blog", cascade = [CascadeType.ALL])
-    val posts: Set<Post>
+    val posts: Set<Post> = emptySet()
 
 ) {
     override fun equals(other: Any?): Boolean {

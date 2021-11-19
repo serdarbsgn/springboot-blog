@@ -13,6 +13,7 @@ data class CreateUserRequest(
     @field:NotBlank
     val username: String,
     @field:Email
+    @field:NotBlank
     val email: String,
     @field:NotBlank
     val dateOfBirth: String,

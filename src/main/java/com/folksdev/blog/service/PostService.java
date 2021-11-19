@@ -37,7 +37,6 @@ public class PostService {
                 createPostRequest.getTitle(),
                 createPostRequest.getContent(),
                 createPostRequest.getTopicsTypes(),
-                Collections.emptySet(),
                 blog
         );
         return postDtoConverter.convert(postRepository.save(post));
@@ -49,6 +48,7 @@ public class PostService {
                 post.getId(),
                 createPostRequest.getTitle(),
                 createPostRequest.getContent(),
+                post.getDate(),
                 createPostRequest.getTopicsTypes(),
                 post.getComments(),
                 post.getBlog()

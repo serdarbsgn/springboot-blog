@@ -37,7 +37,7 @@ class BlogServiceTest extends TestSupport {
     }
 
     @Test
-    void testGetBlogs_whenCalled_ShouldReturnListOfBlogDto(){
+    void testGetBlogs_whenCalled_shouldReturnListOfBlogDto(){
         List<Blog> blogList = List.of(
                 generateBlog("id1"),
                 generateBlog("id2")
@@ -58,7 +58,7 @@ class BlogServiceTest extends TestSupport {
     }
 
     @Test
-    void testGetBlogById_whenBlogIdNotExists_ShouldThrowBlogNotFoundException(){
+    void testGetBlogById_whenBlogIdNotExists_shouldThrowBlogNotFoundException(){
         String blogId = "blogId";
 
         Mockito.when(blogRepository.findById(blogId)).thenThrow(BlogNotFoundException.class);
@@ -70,7 +70,7 @@ class BlogServiceTest extends TestSupport {
     }
 
     @Test
-    void testGetBlogById_whenBlogIdExists_ShouldReturnBlogDto(){
+    void testGetBlogById_whenBlogIdExists_shouldReturnBlogDto(){
         String blogId = "blogId";
         Blog blog = generateBlog(blogId);
         BlogDto expectedBlogDto = generateBlogDto(blogId);
@@ -86,7 +86,7 @@ class BlogServiceTest extends TestSupport {
     }
 
     @Test
-    void testFindBlogById_whenBlogIdNotExists_ShouldThrowBlogNotFoundException(){
+    void testFindBlogById_whenBlogIdNotExists_shouldThrowBlogNotFoundException(){
         String blogId = "blogId";
 
         Mockito.when(blogRepository.findById(blogId)).thenThrow(BlogNotFoundException.class);
@@ -97,7 +97,7 @@ class BlogServiceTest extends TestSupport {
     }
 
     @Test
-    void testFindBlogById_whenBlogIdExists_ShouldReturnBlog(){
+    void testFindBlogById_whenBlogIdExists_shouldReturnBlog(){
         String blogId = "blogId";
         Blog expectedBlog = generateBlog(blogId);
         Mockito.when(blogRepository.findById(blogId)).thenReturn(Optional.of(expectedBlog));
@@ -110,7 +110,7 @@ class BlogServiceTest extends TestSupport {
     }
 
     @Test
-    void testDeleteBlog_whenBlogIdNotExists_ShouldThrowBlogNotFoundException(){
+    void testDeleteBlog_whenBlogIdNotExists_shouldThrowBlogNotFoundException(){
         String blogId = "blogId";
 
         Mockito.when(blogRepository.findById(blogId)).thenThrow(BlogNotFoundException.class);
@@ -121,7 +121,7 @@ class BlogServiceTest extends TestSupport {
     }
 
     @Test
-    void testDeleteBlog_whenBlogIdExists_ShouldReturnConfirmationString(){
+    void testDeleteBlog_whenBlogIdExists_shouldReturnConfirmationString(){
         String blogId = "blogId";
         Blog blog = generateBlog(blogId);
         String expected = "Blog successfully deleted from database with id:" + blogId;
@@ -142,7 +142,9 @@ class BlogServiceTest extends TestSupport {
 
         Mockito.when(blogRepository.existsByUserId(userId)).
                 thenThrow(BlogUniqueConstraintsViolatedException.class);
-
+        //Can't get Mockito to cover this exception.
+        //This is an if statement and when existsByUserId returns true, it throws the exception.
+        //Can get coverage when api is running but couldn't replicate it here.
         assertThrows(BlogUniqueConstraintsViolatedException.class,
                 ()-> blogService.checkUniqueConstraints(userId));
 
@@ -171,8 +173,7 @@ class BlogServiceTest extends TestSupport {
         User user = generateUser(userId);
 
         Mockito.when(userService.findUserById(userId)).thenReturn(user);
-        Mockito.when(blogRepository.existsByUserId(userId)).
-                thenThrow(BlogUniqueConstraintsViolatedException.class);
+        Mockito.when(blogRepository.existsByUserId(userId)).thenReturn(true);
 
         assertThrows(BlogUniqueConstraintsViolatedException.class,
                 ()-> blogService.createBlog(createBlogRequest,userId));
